@@ -1,9 +1,8 @@
-#spring.application.name=usuario-service
-#server.port=8081
+# spring.application.name=eureka-service
 
 spring:
     application:
-        name: usuario-service
+        name: eureka-service
     cloud:
         config:
             enabled: true
@@ -11,8 +10,8 @@ spring:
 
 
 # Ese http://localhost:8081 del bootstrap.yaml
-# NO es un puerto que se "define" para usuario-service. Es una DIRECCIÓN a la que se "apunta".
+# NO es un puerto que se "define" para eureka-service. Es una DIRECCIÓN a la que se "apunta".
 # El puerto http://localhost:8081 se DEFINIO EN: config-service/src/main/resources/application.yaml
 # en la propiedad `server.port: 8081`.
-# El puerto real de usuario-service es el 8101, y se DEFINE en GitHub, en:
-# config-data/usuario-service.yaml → server.port: 8101
+# El puerto real de eureka-service es el 810?, y se DEFINE en GitHub, en:
+# config-data/eureka-service.yaml → server.port: 8101

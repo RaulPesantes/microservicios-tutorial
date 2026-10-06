@@ -1,2 +1,10 @@
 server:
-    port: 8083
+    port: 8103
+eureka:
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+    instance:
+        hostname: localhost 

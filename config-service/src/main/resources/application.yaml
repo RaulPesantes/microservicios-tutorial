@@ -1,15 +1,32 @@
 # spring.application.name=config-service
 
+# server:
+#     port: 8081
+# spring:
+#     cloud:
+#         config:
+#             server:
+#                 git:
+#                     default-label: config server
+#                     uri: https://github.com/RaulPesantes/microservicios-tutorial
+#                     search-paths: config-data
+#     applications:
+#         name: config-service
+
 server:
     port: 8081
 spring:
+    application:
+        name: config-service # <--- Aquí va, al mismo nivel que 'cloud'
     cloud:
         config:
             server:
                 git:
-                    default-label: config server
+                    default-label: config-server
                     uri: https://github.com/RaulPesantes/microservicios-tutorial
                     search-paths: config-data
-    applications:
-        name: config-service
 
+# Ese http://localhost:8081 del application.yaml se DEFINE AQUÍ (en el config-service).
+# Los microservicios (car-service, moto-service, usuario-service) APUNTAN a él desde sus respectivos bootstrap.yaml, en la propiedad `uri`.
+# Si este puerto cambia (por ejemplo a 9999), habría que actualizar el `uri`
+# en los tres bootstrap.yaml para que sigan encontrando el config-service.

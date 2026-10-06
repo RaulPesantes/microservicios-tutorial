@@ -3,9 +3,15 @@
 
 spring:
     application:
-        name: carro-service
+        name: car-service
     cloud:
         config:
             enabled: true
-            uri: http://localhost:8082
+            uri: http://localhost:8081
 
+# Ese http://localhost:8081 del bootstrap.yaml
+# NO es un puerto que se "define" para car-service. Es una DIRECCIÓN a la que se "apunta".
+# El puerto http://localhost:8081 se DEFINIO EN: config-service/src/main/resources/application.yaml
+# en la propiedad `server.port: 8081`.
+# El puerto real de car-service es el 8102, y se DEFINE en GitHub, en:
+# config-data/car-service.yaml → server.port: 8102
