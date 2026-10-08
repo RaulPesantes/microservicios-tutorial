@@ -16,7 +16,8 @@ import com.usuario.service.models.Car;
 // Ejemplo: CarController tiene @RequestMapping("/carro") y @GetMapping("/usuario/{id}")
 //          → el Feign debe usar @GetMapping("/carro/usuario/{id}")
 
-@FeignClient(name = "carro-service", url = "http://localhost:8082")
+//@FeignClient(name = "carro-service", url = "http://localhost:8082")
+@FeignClient(name = "car-service") // Sin url: Feign lo descubre vía Eureka + LoadBalancer
 public interface CarFeignClient {
 
     @PostMapping("/carro")

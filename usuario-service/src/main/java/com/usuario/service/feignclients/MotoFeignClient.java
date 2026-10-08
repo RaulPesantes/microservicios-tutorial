@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.usuario.service.models.Moto;
 
-@FeignClient(name = "moto-service", url = "http://localhost:8083")
+//@FeignClient(name = "moto-service", url = "http://localhost:8083")
+@FeignClient(name = "moto-service") // Sin url: Feign lo descubre vía Eureka + LoadBalancer
 //Ruta del Feign = @RequestMapping de la clase del controlador + @GetMapping/@PostMapping del método
 public interface MotoFeignClient {
 
