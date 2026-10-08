@@ -21,10 +21,11 @@ spring:
     cloud:
         config:
             server:
-                git:
+                git: # apunta al nombre de una rama (branch) de Git.
                     #default-label: config-server
                     #default-label: eureka    # ← en vez de config-server
-                    default-label: multiple-instances    # ← en vez de eureka
+                    #default-label: multiple-instances    # ← en vez de eureka
+                    default-label: gateway    # ← en vez de multiple-instances 
                     uri: https://github.com/RaulPesantes/microservicios-tutorial
                     search-paths: config-data
 

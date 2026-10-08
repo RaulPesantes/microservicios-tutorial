@@ -1,0 +1,17 @@
+#spring.application.name=gateway-service
+
+spring:
+    application:
+        name: gateway-service
+    cloud:
+        config:
+            enabled: true
+            uri: http://localhost:8081    # ← CORREGIDO: era 8101
+
+
+# Ese http://localhost:8081 del bootstrap.yaml
+# NO es un puerto que se "define" para gateway-service. Es una DIRECCIÓN a la que se "apunta".
+# El puerto http://localhost:8081 se DEFINIO EN: config-service/src/main/resources/application.yaml
+# en la propiedad `server.port: 8081`.
+# El puerto real de gateway-service es el 8101?, y se DEFINE en GitHub, en:
+# config-data/usuario-service.yaml → server.port: 8101?
