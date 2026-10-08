@@ -4,4 +4,8 @@ eureka:
     client:
         fetch-registry: false
         register-with-eureka: false
+        # agregar
+        # Necesario para que el servidor Eureka sepa su propia ubicación
+        service-url:
+            default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
     

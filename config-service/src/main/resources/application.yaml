@@ -22,7 +22,8 @@ spring:
         config:
             server:
                 git:
-                    default-label: config-server
+                    #default-label: config-server
+                    default-label: eureka    # ← en vez de config-server
                     uri: https://github.com/RaulPesantes/microservicios-tutorial
                     search-paths: config-data
 
