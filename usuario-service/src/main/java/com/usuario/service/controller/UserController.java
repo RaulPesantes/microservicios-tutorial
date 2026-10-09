@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import com.usuario.service.entity.User;
 import com.usuario.service.models.Car;
 import com.usuario.service.models.Moto;
 import com.usuario.service.service.UserService;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
 @RequestMapping("/usuario")
@@ -51,7 +54,9 @@ public class UserController {
         return ResponseEntity.ok(newUser);
     }
 
+    // Aplicacion de CircuitBreaker aqui abajo:
     // 4️⃣ listCars(id) → listar los carros de un usuario específico
+    @CircuitBreaker(name = "carrosCB", fallbackMethod = "fallBackGetCarros")
     @GetMapping("/carros/{usuarioId}")
     public ResponseEntity<List<Car>> listCars(@PathVariable("usuarioId") int id) {
         User user = userService.getUserById(id);
@@ -63,6 +68,7 @@ public class UserController {
     }
 
     // 5️⃣ listMotos(id) → listar los motos de un usuario específico
+    @CircuitBreaker(name = "motosCB", fallbackMethod = "fallBackSaveMotos")
     @GetMapping("/motos/{usuarioId}")
     public ResponseEntity<List<Moto>> listMotos(@PathVariable("usuarioId") int id) {
         User user = userService.getUserById(id);
@@ -74,6 +80,7 @@ public class UserController {
     }
 
     // 6️⃣ saveCar(usuarioId, car) → guardar un carro para un usuario específico
+    @CircuitBreaker(name = "carrosCB", fallbackMethod = "fallBackSaveCarro")
     @PostMapping("/carro/{usuarioId}")
     public ResponseEntity<Car> saveCar(@PathVariable("usuarioId") int usuarioId, @RequestBody Car car) {
         Car newCar = userService.saveCar(usuarioId, car);
@@ -81,6 +88,7 @@ public class UserController {
     }
 
     // 7️⃣ saveMoto(usuarioId, moto) → guardar una moto para un usuario específico
+    @CircuitBreaker(name = "motosCB", fallbackMethod = "fallBackSaveMoto")
     @PostMapping("/moto/{usuarioId}")
     public ResponseEntity<Moto> saveMoto(@PathVariable("usuarioId") int usuarioId, @RequestBody Moto moto) {
         Moto newMoto = userService.saveMoto(usuarioId, moto);
@@ -88,10 +96,32 @@ public class UserController {
     }
 
     // 8️⃣ listarTodosLosVehiculos(usuarioId) → obtener el usuario junto con la lista completa de sus vehículos
+    @CircuitBreaker(name = "todosCB", fallbackMethod = "fallBackGetTodos")
     @GetMapping("/todos/{usuarioId}")
     public ResponseEntity<Map<String, Object>> listarTodosLosVehiculos(@PathVariable("usuarioId") int usuarioId) {
         Map<String, Object> resultado = userService.getUsuarioAndVehiculos(usuarioId);
         return ResponseEntity.ok(resultado);
     }
+
+    //
+    private ResponseEntity<List<Car>> fallBackGetCarros(@PathVariable("usuarioId") int id, RuntimeException exception) {
+        return new ResponseEntity("El usuario : "+ id + "tiene los carros en el taller", HttpStatus.OK);
+    }
+    //
+    private ResponseEntity<List<Car>> fallBackSaveCarro(@PathVariable("usuarioId") int id,@RequestBody Car car, RuntimeException exception) {
+        return new ResponseEntity("El usuario : "+ id + "no tiene dinero para los carros", HttpStatus.OK);
+    }
+    //
+    private ResponseEntity<List<Moto>> fallBackGetMotos(@PathVariable("usuarioId") int id, RuntimeException exception) {
+        return new ResponseEntity("El usuario : "+ id + "tiene las motos en el taller", HttpStatus.OK);
+    }
+    //
+    private ResponseEntity<List<Moto>> fallBackSaveMoto(@PathVariable("usuarioId") int id,@RequestBody Moto moto, RuntimeException exception) {
+        return new ResponseEntity("El usuario : "+ id + "no tiene dinero para las motos", HttpStatus.OK);
+    }
+    //
+    private ResponseEntity<List<Car>> fallBackGetTodos(@PathVariable("usuarioId") int id, RuntimeException exception) {
+        return new ResponseEntity("El usuario : "+ id + "tiene los vehiculos en el taller", HttpStatus.OK);
+    }    
 
 }
