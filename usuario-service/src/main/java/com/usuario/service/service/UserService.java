@@ -47,13 +47,15 @@ public class UserService {
 
     //Esa línea es la que te permite consumir un microservicio desde otro servicio.
     public List<Car> getCars(int userId) {
-        List<Car> cars = restTemplate.getForObject("http://localhost:8082/carro/usuario/"+ userId , List.class);
+        //List<Car> cars = restTemplate.getForObject("http://localhost:8082/carro/usuario/"+ userId , List.class);
+        List<Car> cars = restTemplate.getForObject("http://carro-service/carro/usuario/"+ userId , List.class);
         return cars;
     }
 
     //Esa línea es la que te permite consumir un microservicio desde otro servicio.
     public List<Moto> getMotos(int userId) {
-        List<Moto> motos = restTemplate.getForObject("http://localhost:8083/moto/usuario/"+ userId , List.class);
+        //List<Moto> motos = restTemplate.getForObject("http://localhost:8083/moto/usuario/"+ userId , List.class);
+        List<Moto> motos = restTemplate.getForObject("http:moto-service/moto/usuario/"+ userId , List.class);
         return motos;
     }
 
