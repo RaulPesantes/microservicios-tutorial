@@ -48,7 +48,7 @@ public class UserService {
     //Esa línea es la que te permite consumir un microservicio desde otro servicio.
     public List<Car> getCars(int userId) {
         //List<Car> cars = restTemplate.getForObject("http://localhost:8082/carro/usuario/"+ userId , List.class);
-        List<Car> cars = restTemplate.getForObject("http://carro-service/carro/usuario/"+ userId , List.class);
+        List<Car> cars = restTemplate.getForObject("http://car-service/carro/usuario/"+ userId , List.class);
         return cars;
     }
 
@@ -91,7 +91,7 @@ public class UserService {
         
         List<Moto> motos = motoFeignClient.getMotos(usuarioId);
         if (motos.isEmpty()) {
-            resultado.put("Mensaje, motos", "El usuario no tiene carros");
+            resultado.put("Mensaje, motos", "El usuario no tiene motos");
         }else{
             resultado.put("Mensaje motos", motos);
         }
