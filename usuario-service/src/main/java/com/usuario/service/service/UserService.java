@@ -55,7 +55,7 @@ public class UserService {
     //Esa línea es la que te permite consumir un microservicio desde otro servicio.
     public List<Moto> getMotos(int userId) {
         //List<Moto> motos = restTemplate.getForObject("http://localhost:8083/moto/usuario/"+ userId , List.class);
-        List<Moto> motos = restTemplate.getForObject("http:moto-service/moto/usuario/"+ userId , List.class);
+        List<Moto> motos = restTemplate.getForObject("http://moto-service/moto/usuario/"+ userId , List.class);
         return motos;
     }
 
