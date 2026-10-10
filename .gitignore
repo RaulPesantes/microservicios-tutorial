@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/launch.json 
+
+zipkin-server-2.23.16-exec.jar
+

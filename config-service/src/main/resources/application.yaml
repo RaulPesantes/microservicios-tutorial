@@ -26,7 +26,8 @@ spring:
                     #default-label: eureka    # ← en vez de config-server
                     #default-label: multiple-instances    # ← en vez de eureka
                     #default-label: gateway    # ← en vez de multiple-instances 
-                    default-label: circuit-breaker    # ← en vez de gateway 
+                    #default-label: circuit-breaker    # ← en vez de gateway 
+                    default-label: zipkin-sleuth    # ← en vez de circuit-breaker 
                     uri: https://github.com/RaulPesantes/microservicios-tutorial
                     search-paths: config-data
 
