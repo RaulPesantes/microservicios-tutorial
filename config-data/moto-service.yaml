@@ -12,7 +12,7 @@ eureka:
         instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 spring:
     application:
-        name: car-service
+        name: moto-service
 
 management:
     tracing:
